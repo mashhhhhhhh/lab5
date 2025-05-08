@@ -5,7 +5,7 @@ std::vector<std::vector<double>> gen_matrix(int n) {
     std::vector<std::vector<double>> mat(n, std::vector<double>(n));
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n; ++j) {
-            mat[i][j] = 1.0 / (1.0 + 3 * (i + 1) + 2 * (j + 1));
+            mat[i][j] = 1.0 / (1.0 + 3.0 * i + 2.0 * j );
         }
     }
     return mat;

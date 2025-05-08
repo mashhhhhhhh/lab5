@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <vector>
 #include <chrono>
 #include <iomanip>
@@ -6,12 +6,21 @@
 
 using namespace std;
 using namespace chrono;
+vector<double> solve_svd(const vector<vector<double>>& mat, const vector<double>& rhs);
+vector<double> compute_svd_values(const vector<vector<double>>& mat);
+double compute_cond_number(const vector<vector<double>>& mat);
+vector<vector<double>> gen_matrix(int size);
+vector<double> gen_exact_solution(int size);
+vector<double> mat_vec_mul(const vector<vector<double>>& mat, const vector<double>& vec);
+double compute_error(const vector<double>& approx, const vector<double>& exact);
+vector<double> solve_lu(const vector<vector<double>>& mat, const vector<double>& rhs);
+vector<double> solve_qr(const vector<vector<double>>& mat, const vector<double>& rhs);
+vector<double> compute_svd_values(const vector<vector<double>>& mat);
+double compute_cond_number(const vector<vector<double>>& mat);
 
 void print_results(int n, const string& method, double error,
     long long time, const vector<double>& sv, double cond) {
-    cout << "│ " << setw(4) << n << " │ " << setw(6) << method << " │ "
-        << scientific << setprecision(3) << error << " │ "
-        << setw(8) << time << " │ ";
+    cout << " " << n << "  " << method << "  "<< error << "  " << time << "  ";
 
     cout << "[";
     int show_sv = min(3, (int)sv.size());
@@ -19,7 +28,7 @@ void print_results(int n, const string& method, double error,
         cout << scientific << setprecision(2) << sv[i];
         if (i < show_sv - 1) cout << ",";
     }
-    cout << "] │ " << fixed << setprecision(2) << cond << " │" << endl;
+    cout << "] "  << cond << " " << endl;
 }
 
 void run_test(int n) {
@@ -53,15 +62,11 @@ void run_test(int n) {
 }
 
 int main() {
-    cout << "┌──────┬────────┬────────────┬──────────┬─────────────────┬────────────┐" << endl;
-    cout << "│ Size │ Method │ Error      │ Time (μs)│ Singular Values │ Cond(A)    │" << endl;
-    cout << "├──────┼────────┼────────────┼──────────┼─────────────────┼────────────┤" << endl;
+    cout << " Size  Method  Error       Time (μs) Singular Values  Cond(A)    │" << endl;
 
     for (int n : {5, 10, 20}) {
         run_test(n);
-        cout << "├──────┼────────┼────────────┼──────────┼─────────────────┼────────────┤" << endl;
     }
 
-    cout << "└──────┴────────┴────────────┴──────────┴─────────────────┴────────────┘" << endl;
     return 0;
 }
